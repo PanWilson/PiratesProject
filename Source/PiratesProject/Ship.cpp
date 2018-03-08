@@ -33,6 +33,9 @@ void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Forward();
+	Turn();
+	AntiSlide();
 }
 
 // Called to bind functionality to input
@@ -59,14 +62,28 @@ void AShip::TurnInput(float AxisValue) {
 
 void AShip::Forward() {
 
-	FVector Force = Body->GetForwardVector() * ForwardValue * AccForce;
+	FVector Force;
+	if(ForwardValue)Force = Body->GetForwardVector() * ForwardValue * AccForce;
+	else {
+		Force = Body->GetForwardVector() * MobileForwardValue * AccForce;
+	}
 	Body->AddForce(Force, NAME_None, true);
 
 }
 
 void AShip::Turn() {
 
-	FVector Force = Body->GetUpVector() * TurnValue * TurnRate;
+	FVector Force;
+	if(TurnValue) Force = Body->GetUpVector() * TurnValue * TurnRate * TurnCurve.GetRichCurve()->Eval(ForwardValue);
+	else Force = Body->GetUpVector() * MobileTurnValue * TurnRate * TurnCurve.GetRichCurve()->Eval(ForwardValue);
 	Body->AddTorqueInRadians(Force, NAME_None, true);
+
+}
+
+void AShip::AntiSlide() {
+
+	float SlideFactor = FVector::DotProduct(Body->GetRightVector(), Body->GetComponentVelocity().GetSafeNormal());
+	FVector Force = Body->GetRightVector() * SlideFactor * SlideForce *-1;
+	Body->AddForce(Force, NAME_None, true);
 
 }

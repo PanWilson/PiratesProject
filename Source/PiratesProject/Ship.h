@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Curves/CurveFloat.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Ship.generated.h"
@@ -26,22 +27,35 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UBoxComponent* Body;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* BodyMesh;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
 	float ForwardValue;
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
 	float TurnValue;
 	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
-	float TurnRate;
+	float TurnRate = 2;
 	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
-	float AccForce;
-
-	void ForwardInput(float AxisValue);
-	void TurnInput(float AxisValue);
+	float AccForce = 10;
+	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
+	float SlideForce = 40;
+	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
+	FRuntimeFloatCurve TurnCurve;
 
 	void Forward();
 	void Turn();
+	void AntiSlide();
+	void ForwardInput(float AxisValue);
+	void TurnInput(float AxisValue);
+
+public:
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
+		float MobileForwardValue;
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
+		float MobileTurnValue;
+
 	
 };
