@@ -1,2 +1,2 @@
 # PiratesProject
-![](https://media.giphy.com/media/kHFGSs6tGmgtLGAQBa/giphy.gif)
+![](https://thumbs.gfycat.com/UnrulyUnfoldedApisdorsatalaboriosa-size_restricted.gif)
