@@ -5,6 +5,9 @@
 #include "Curves/CurveFloat.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/BoxComponent.h"
+#include "Components/InputComponent.h"
+#include "Components/StaticMeshComponent.h"
 #include "Ship.generated.h"
 
 UCLASS()
@@ -32,10 +35,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UStaticMeshComponent* BodyMesh;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
-	float ForwardValue;
-	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
-	float TurnValue;
 	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
 	float TurnRate = 2;
 	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
@@ -44,17 +43,16 @@ public:
 	float SlideForce = 40;
 	UPROPERTY(EditAnywhere, Category = "Movement Parameters")
 	FRuntimeFloatCurve TurnCurve;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ship Parameters")
+	float Health;
 
 	void Forward();
 	void Turn();
 	void AntiSlide();
-	void ForwardInput(float AxisValue);
-	void TurnInput(float AxisValue);
 
-public:
-	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Values")
 		float MobileForwardValue;
-	UPROPERTY(BlueprintReadWrite, Category = "Movement Parameters")
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Values")
 		float MobileTurnValue;
 
 	
