@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SimplexNoiseBPLibrary.h"
+#include "Engine/World.h"
 #include "GameFramework/Actor.h"
 #include "LevelGenerator.generated.h"
+
 
 UCLASS()
 class PIRATESPROJECT_API ALevelGenerator : public AActor
@@ -23,6 +26,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void GenerateMap();
 	
-	
+	void CreateBox(float x, float y, float height);
+
 };

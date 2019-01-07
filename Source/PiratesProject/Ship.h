@@ -54,6 +54,8 @@ public:
 		float MobileForwardValue;
 	UPROPERTY(BlueprintReadWrite, Category = "Movement Values")
 		float MobileTurnValue;
+	UPROPERTY(BlueprintReadWrite, Category = "Movement Values")
+		bool canMove;
 
 	
 };

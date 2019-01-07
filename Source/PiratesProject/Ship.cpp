@@ -16,6 +16,7 @@ AShip::AShip()
 	BodyMesh = CreateAbstractDefaultSubobject<UStaticMeshComponent>(TEXT("Basic Mesh"));
 	BodyMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
+	canMove = true;
 }
 
 // Called when the game starts or when spawned
@@ -29,9 +30,10 @@ void AShip::BeginPlay()
 void AShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	Forward();
-	Turn();
+	if (canMove) {
+		Forward();
+		Turn();
+	}
 	AntiSlide();
 }
 
@@ -44,14 +46,14 @@ void AShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AShip::Forward() {
 
-	FVector Force;
-	Force = Body->GetForwardVector() * MobileForwardValue * AccForce;
-	Body->AddForce(Force, NAME_None, true);
+		FVector Force;
+		Force = Body->GetForwardVector() * MobileForwardValue * AccForce;
+		Body->AddForce(Force, NAME_None, true);
 
 }
 
 void AShip::Turn() {
-
+	
 	FVector Force;
 	Force = Body->GetUpVector() * MobileTurnValue * TurnRate * TurnCurve.GetRichCurve()->Eval(MobileForwardValue);
 	Body->AddTorqueInRadians(Force, NAME_None, true);
